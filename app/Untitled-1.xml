@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.18">
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="start_jam,start_menit,start_detik" type="Integer" array="False" size=""/>
+            <declare name="jam1,menit1,detik1,jam2,menit2,detik2,jam3,menit3,detik3" type="Integer" array="False" size=""/>
+            <declare name="durasi1,durasi2,durasi3,durasi_juara1,durasi_juara2,durasi_juara3" type="Integer" array="False" size=""/>
+            <declare name="nama1,nama2,nama3,juara1,juara2,juara3" type="String" array="False" size=""/>
+
+            <output expression='"Masukkan waktu start (jam menit detik):"' newline="True"/>
+            <input variable="start_jam,start_menit,start_detik"/>
+
+            <output expression='"Masukkan nama pelari 1:"' newline="True"/>
+            <input variable="nama1"/>
+            <output expression='"Masukkan waktu finish pelari 1 (jam menit detik):"' newline="True"/>
+            <input variable="jam1,menit1,detik1"/>
+
+            <output expression='"Masukkan nama pelari 2:"' newline="True"/>
+            <input variable="nama2"/>
+            <output expression='"Masukkan waktu finish pelari 2 (jam menit detik):"' newline="True"/>
+            <input variable="jam2,menit2,detik2"/>
+
+            <output expression='"Masukkan nama pelari 3:"' newline="True"/>
+            <input variable="nama3"/>
+            <output expression='"Masukkan waktu finish pelari 3 (jam menit detik):"' newline="True"/>
+            <input variable="jam3,menit3,detik3"/>
+
+            <!-- Hitung durasi -->
+            <assign variable="durasi1" expression="(jam1*3600 + menit1*60 + detik1) - (start_jam*3600 + start_menit*60 + start_detik)"/>
+            <assign variable="durasi2" expression="(jam2*3600 + menit2*60 + detik2) - (start_jam*3600 + start_menit*60 + start_detik)"/>
+            <assign variable="durasi3" expression="(jam3*3600 + menit3*60 + detik3) - (start_jam*3600 + start_menit*60 + start_detik)"/>
+
+            <!-- Urutkan -->
+            <if expression="durasi1 &lt; durasi2 and durasi1 &lt; durasi3">
+                <then>
+                    <assign variable="juara1" expression="nama1"/>
+                    <assign variable="durasi_juara1" expression="durasi1"/>
+                    <if expression="durasi2 &lt; durasi3">
+                        <then>
+                            <assign variable="juara2" expression="nama2"/>
+                            <assign variable="durasi_juara2" expression="durasi2"/>
+                            <assign variable="juara3" expression="nama3"/>
+                            <assign variable="durasi_juara3" expression="durasi3"/>
+                        </then>
+                        <else>
+                            <assign variable="juara2" expression="nama3"/>
+                            <assign variable="durasi_juara2" expression="durasi3"/>
+                            <assign variable="juara3" expression="nama2"/>
+                            <assign variable="durasi_juara3" expression="durasi2"/>
+                        </else>
+                    </if>
+                </then>
+                <else>
+                    <if expression="durasi2 &lt; durasi1 and durasi2 &lt; durasi3">
+                        <then>
+                            <assign variable="juara1" expression="nama2"/>
+                            <assign variable="durasi_juara1" expression="durasi2"/>
+                            <if expression="durasi1 &lt; durasi3">
+                                <then>
+                                    <assign variable="juara2" expression="nama1"/>
+                                    <assign variable="durasi_juara2" expression="durasi1"/>
+                                    <assign variable="juara3" expression="nama3"/>
+                                    <assign variable="durasi_juara3" expression="durasi3"/>
+                                </then>
+                                <else>
+                                    <assign variable="juara2" expression="nama3"/>
+                                    <assign variable="durasi_juara2" expression="durasi3"/>
+                                    <assign variable="juara3" expression="nama1"/>
+                                    <assign variable="durasi_juara3" expression="durasi1"/>
+                                </else>
+                            </if>
+                        </then>
+                        <else>
+                            <assign variable="juara1" expression="nama3"/>
+                            <assign variable="durasi_juara1" expression="durasi3"/>
+                            <if expression="durasi1 &lt; durasi2">
+                                <then>
+                                    <assign variable="juara2" expression="nama1"/>
+                                    <assign variable="durasi_juara2" expression="durasi1"/>
+                                    <assign variable="juara3" expression="nama2"/>
+                                    <assign variable="durasi_juara3" expression="durasi2"/>
+                                </then>
+                                <else>
+                                    <assign variable="juara2" expression="nama2"/>
+                                    <assign variable="durasi_juara2" expression="durasi2"/>
+                                    <assign variable="juara3" expression="nama1"/>
+                                    <assign variable="durasi_juara3" expression="durasi1"/>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+
+            <!-- Output hasil -->
+            <output expression='"Juara 1 : " &amp; juara1 &amp; " (" &amp; durasi_juara1/3600 &amp; ":" &amp; (durasi_juara1%3600)/60 &amp; ":" &amp; durasi_juara1%60 &amp; ")"' newline="True"/>
+            <output expression='"Juara 2 : " &amp; juara2 &amp; " (" &amp; durasi_juara2/3600 &amp; ":" &amp; (durasi_juara2%3600)/60 &amp; ":" &amp; durasi_juara2%60 &amp; ")"' newline="True"/>
+            <output expression='"Juara 3 : " &amp; juara3 &amp; " (" &amp; durasi_juara3/3600 &amp; ":" &amp; (durasi_juara3%3600)/60 &amp; ":" &amp; durasi_juara3%60 &amp; ")"' newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
